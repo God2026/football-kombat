@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Football Kombat</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div class="top-header">
+            <div class="user-info">
+                <div class="avatar-box">
+                    <img src="assets/1.png" id="avatar-img" alt="User">
+                </div>
+                <div class="user-details">
+                    <span id="username">در حال لود...</span>
+                    </div>
+            </div>
+            <div class="exchange-badge">
+                <span class="binance-logo">🔶</span>
+                <span>Binance</span>
+            </div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-box">
+                <span class="label">سود در ساعت</span>
+                <div class="value warning-color">
+                    <img src="assets/coin.png" class="tiny-coin">
+                    <span id="profit-per-hour">0</span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <span class="label">سکه برای لول بعد</span>
+                <div class="value highlight-color" id="coins-to-levelup">5K</div>
+            </div>
+            <div class="stat-box">
+                <span class="label">سود هر تپ</span>
+                <div class="value">
+                    <img src="assets/coin.png" class="tiny-coin">
+                    +<span id="earn-per-tap">1</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-balance">
+            <img src="assets/coin.png" class="main-coin-icon">
+            <span id="total-coins">0</span>
+        </div>
+
+        <div class="league-info">
+            <span id="league-name" class="league-title">تازه کار</span>
+            <span id="league-level">Level 1/11</span>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="level-progress-bar" style="width: 1%;"></div>
+        </div>
+
+        <div class="tap-area" onclick="handleTap(event)">
+            <div class="circle-bg"></div>
+            <img id="main-character" src="assets/1.png" alt="Character">
+        </div>
+
+        <div class="energy-section">
+            <div class="energy-box">
+                <span class="lightning">⚡</span>
+                <span id="current-energy">1000</span> / <span id="max-energy">1000</span>
+            </div>
+            <div class="boost-btn">
+                🚀 Boost
+            </div>
+        </div>
+
+        <div style="height: 80px;"></div>
+
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="openTab('game')">
+            <div class="icon">🐹</div>
+            <span>Exchange</span>
+        </div>
+        <div class="nav-item" onclick="openTab('mine')">
+            <div class="icon">⛏️</div>
+            <span>Mine</span>
+        </div>
+        <div class="nav-item" onclick="openTab('friends')">
+            <div class="icon">👥</div>
+            <span>Friends</span>
+        </div>
+        <div class="nav-item" onclick="openTab('earn')">
+            <div class="icon">💰</div>
+            <span>Earn</span>
+        </div>
+        <div class="nav-item" onclick="openTab('airdrop')">
+            <div class="icon">💎</div>
+            <span>Airdrop</span>
+        </div>
+    </div>
+
+    <div id="mine-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('mine')">&times;</span>
+            <h2>خرید تیم و کارت 🏟️</h2>
+            <div id="team-cards-container" class="cards-grid"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
