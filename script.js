@@ -1,18 +1,18 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// سطح بندی لیگ (عکس‌ها از assets/1.png تا assets/10.png از خودت)
+// سطح بندی لیگ (بر اساس پوشه assets/leagues در گیت‌هاب تو)
 const LEAGUES = [
-    { name: "تازه کار", score: 0, img: "assets/1.png" },
-    { name: "کار آموز", score: 5000, img: "assets/2.png" },
-    { name: "آماتور", score: 25000, img: "assets/3.png" },
-    { name: "حرفه ای", score: 100000, img: "assets/4.png" },
-    { name: "با تجربه", score: 500000, img: "assets/5.png" },
-    { name: "متخصص", score: 2000000, img: "assets/6.png" },
-    { name: "ماهر", score: 10000000, img: "assets/7.png" },
-    { name: "افسانه ای", score: 50000000, img: "assets/8.png" },
-    { name: "ابر قدرت", score: 100000000, img: "assets/9.png" },
-    { name: "خدا", score: 1000000000, img: "assets/10.png" }
+    { name: "تازه کار", score: 0, img: "assets/leagues/1.png" },
+    { name: "کار آموز", score: 5000, img: "assets/leagues/2.png" },
+    { name: "آماتور", score: 25000, img: "assets/leagues/3.png" },
+    { name: "حرفه ای", score: 100000, img: "assets/leagues/4.png" },
+    { name: "با تجربه", score: 500000, img: "assets/leagues/5.png" },
+    { name: "متخصص", score: 2000000, img: "assets/leagues/6.png" },
+    { name: "ماهر", score: 10000000, img: "assets/leagues/7.png" },
+    { name: "افسانه ای", score: 50000000, img: "assets/leagues/8.png" },
+    { name: "ابر قدرت", score: 100000000, img: "assets/leagues/9.png" },
+    { name: "خدا", score: 1000000000, img: "assets/leagues/10.png" }
 ];
 
 // لیست کامل تیم‌ها با لینک مستقیم عکس
@@ -61,7 +61,7 @@ const TEAMS_DB = [
 ];
 
 let user = {
-    username: "بازیکن",
+    username: "Guest",
     coins: 0,
     energy: 1000,
     maxEnergy: 1000,
@@ -70,7 +70,7 @@ let user = {
     purchasedTeams: []
 };
 
-// --- توابع اصلی بازی ---
+// --- منطق بازی ---
 
 function initGame() {
     const saved = localStorage.getItem('football_kombat_save');
@@ -82,7 +82,7 @@ function initGame() {
     document.getElementById('username').innerText = user.username;
 
     setInterval(saveData, 5000);
-    setInterval(gameLoop, 1000); 
+    setInterval(gameLoop, 1000);
     
     updateUI();
     filterShop('eng'); 
@@ -94,9 +94,9 @@ function updateUI() {
     document.getElementById('earn-per-tap').innerText = user.tapLevel;
     document.getElementById('current-energy').innerText = Math.floor(user.energy);
     
-    // منطق تغییر لول و عکس کاراکتر
+    // منطق سطح‌بندی
     let leagueIdx = 0;
-    for(let i=0; i<LEAGUES.length; i++) {
+    for(let i = 0; i < LEAGUES.length; i++) {
         if(user.coins >= LEAGUES[i].score) leagueIdx = i;
     }
     
@@ -141,7 +141,7 @@ function handleTap(event) {
 }
 
 function gameLoop() {
-    if (user.energy < user.maxEnergy) user.energy += (user.maxEnergy / 600); 
+    if (user.energy < user.maxEnergy) user.energy += (user.maxEnergy / 600);
     if (user.profitPerHour > 0) user.coins += (user.profitPerHour / 3600);
     updateUI();
 }
@@ -152,7 +152,7 @@ function saveData() {
 
 function filterShop(category) {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    // پیدا کردن دکمه فشرده شده بر اساس متن یا آرگومان
+    // پیدا کردن دکمه و فعال کردن آن
     const container = document.getElementById('team-cards-container');
     container.innerHTML = '';
 
@@ -163,7 +163,7 @@ function filterShop(category) {
         const div = document.createElement('div');
         div.className = 'team-card';
         div.innerHTML = `
-            <img src="${team.img}" class="team-logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/33/33736.png'">
+            <img src="${team.img}" class="team-logo" onerror="this.src='assets/coin.png'">
             <h4>${team.name}</h4>
             <p style="font-size:10px; color:#aaa">سود: +${team.profit}/ساعت</p>
             <button class="buy-btn" ${isOwned ? 'disabled' : ''} onclick="buyTeam('${team.id}')">
@@ -185,7 +185,6 @@ function buyTeam(id) {
         saveData();
         updateUI();
         filterShop(team.cat);
-        tg.showAlert(`تیم ${team.name} با موفقیت خریداری شد!`);
     } else {
         tg.showAlert("سکه کافی نداری!");
     }
@@ -209,5 +208,4 @@ function formatNumber(num) {
     return Math.floor(num);
 }
 
-// اجرای اولیه
 initGame();
