@@ -1,0 +1,51 @@
+:root {
+    --primary: #007aff;
+    --accent: #f3ba2f;
+    --bg-dark: #0a0b0e;
+    --card-bg: #1c1f24;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; user-select: none; }
+body { background-color: var(--bg-dark); color: white; overflow: hidden; }
+
+/* دکمه‌های جدید و مدرن */
+.buy-btn {
+    background: linear-gradient(45deg, var(--primary), #005bb5);
+    color: white; border: none; padding: 12px; width: 90%; border-radius: 12px;
+    font-weight: bold; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+}
+
+.buy-btn:active { transform: scale(0.95); }
+.buy-btn:disabled { background: #333; box-shadow: none; opacity: 0.6; }
+
+/* لیدربرد */
+.leader-list { margin-top: 20px; }
+.leader-item {
+    background: #272a2f; margin-bottom: 8px; padding: 15px;
+    border-radius: 12px; display: flex; justify-content: space-between;
+    border: 1px solid #333;
+}
+.top-player { border-color: var(--accent); background: linear-gradient(90deg, #272a2f, #3a3321); }
+
+/* کارت تیم‌ها */
+.team-card {
+    background: var(--card-bg); padding: 15px; border-radius: 20px;
+    display: flex; flex-direction: column; align-items: center;
+    border: 1px solid #2d323a; gap: 10px;
+}
+.team-logo { width: 60px; height: 60px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
+
+/* نویگیشن شیشه‌ای */
+.bottom-nav {
+    backdrop-filter: blur(10px); background: rgba(39, 42, 47, 0.8);
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* افکت کلیک */
+.floating-text {
+    position: fixed; color: #fff; font-weight: 900; font-size: 28px;
+    text-shadow: 0 0 10px var(--primary); pointer-events: none;
+    animation: floatUp 0.8s ease-out forwards; z-index: 1000;
+}
+@keyframes floatUp { 0% { transform: translate(-50%, 0); opacity: 1; } 100% { transform: translate(-50%, -100px); opacity: 0; } }
