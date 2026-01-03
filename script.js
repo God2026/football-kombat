@@ -3,17 +3,16 @@ tg.expand();
 
 // سطح بندی لیگ (عکس‌ها از assets/1.png تا assets/11.png)
 const LEAGUES = [
-    { name: "تازه کار", score: 0, img: "assets/1.png" },
-    { name: "کار آموز", score: 5000, img: "assets/2.png" },
-    { name: "آماتور", score: 25000, img: "assets/3.png" },
-    { name: "حرفه ای", score: 100000, img: "assets/4.png" },
-    { name: "با تجربه", score: 500000, img: "assets/5.png" },
-    { name: "متخصص", score: 2000000, img: "assets/6.png" },
-    { name: "ماهر", score: 10000000, img: "assets/7.png" },
-    { name: "افسانه ای", score: 50000000, img: "assets/8.png" },
-    { name: "ابر قدرت", score: 100000000, img: "assets/9.png" },
-    { name: "پادشاه", score: 500000000, img: "assets/10.png" },
-    { name: "خدا", score: 1000000000, img: "assets/11.png" }
+    { name: "تازه کار", score: 0, img: "assets/leagues/1.png" },
+    { name: "کار آموز", score: 5000, img: "assets/leagues/2.png" },
+    { name: "آماتور", score: 25000, img: "assets/leagues/3.png" },
+    { name: "حرفه ای", score: 100000, img: "assets/leagues/4.png" },
+    { name: "با تجربه", score: 500000, img: "assets/leagues/5.png" },
+    { name: "متخصص", score: 2000000, img: "assets/leagues/6.png" },
+    { name: "ماهر", score: 10000000, img: "assets/leagues/7.png" },
+    { name: "افسانه ای", score: 50000000, img: "assets/leagues/8.png" },
+    { name: "ابر قدرت", score: 100000000, img: "assets/leagues/9.png" },
+    { name: "خدا", score: 1000000000, img: "assets/leagues/10.png" }
 ];
 
 // لیست کامل تیم‌ها با دسته‌بندی
@@ -262,3 +261,4 @@ function formatNumber(num) {
 
 // استارت
 initGame();
+
