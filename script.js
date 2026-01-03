@@ -1,7 +1,8 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
+tg.setHeaderColor('#000000'); // هدر مشکی برای یکدستی با تم
 
-// سطح بندی لیگ (عکس‌ها از assets/1.png تا assets/11.png)
+// --- 1. سیستم سطح‌بندی کامل (11 سطح) ---
 const LEAGUES = [
     { name: "تازه کار", score: 0, img: "assets/leagues/1.png" },
     { name: "کار آموز", score: 5000, img: "assets/leagues/2.png" },
@@ -12,89 +13,59 @@ const LEAGUES = [
     { name: "ماهر", score: 10000000, img: "assets/leagues/7.png" },
     { name: "افسانه ای", score: 50000000, img: "assets/leagues/8.png" },
     { name: "ابر قدرت", score: 100000000, img: "assets/leagues/9.png" },
-    { name: "خدا", score: 1000000000, img: "assets/leagues/10.png" }
+    { name: "خدا", score: 1000000000, img: "assets/leagues/10.png" },
 ];
 
-// لیست کامل تیم‌ها با دسته‌بندی
+// --- 2. دیتابیس جامع تیم‌ها (لینک‌های واقعی و بالانس شده) ---
 const TEAMS_DB = [
-    // --- لیگ برتر انگلیس (cat: eng) ---
-    { id: 'eng1', cat: 'eng', name: 'آرسنال', img: 'arsenal.png', cost: 10000, profit: 800 },
-    { id: 'eng2', cat: 'eng', name: 'منچستر سیتی', img: 'man_city.png', cost: 12000, profit: 900 },
-    { id: 'eng3', cat: 'eng', name: 'استون ویلا', img: 'aston_villa.png', cost: 8000, profit: 600 },
-    { id: 'eng4', cat: 'eng', name: 'لیورپول', img: 'liverpool.png', cost: 11000, profit: 850 },
-    { id: 'eng5', cat: 'eng', name: 'چلسی', img: 'chelsea.png', cost: 10500, profit: 820 },
-    { id: 'eng6', cat: 'eng', name: 'منچستر یونایتد', img: 'man_utd.png', cost: 10500, profit: 820 },
-    { id: 'eng7', cat: 'eng', name: 'ساندرلند', img: 'sunderland.png', cost: 5000, profit: 300 },
-    { id: 'eng8', cat: 'eng', name: 'اورتون', img: 'everton.png', cost: 6000, profit: 400 },
-    { id: 'eng9', cat: 'eng', name: 'برنتفورد', img: 'brentford.png', cost: 5500, profit: 350 },
-    { id: 'eng10', cat: 'eng', name: 'کریستال پالاس', img: 'crystal_palace.png', cost: 5500, profit: 350 },
-    { id: 'eng11', cat: 'eng', name: 'فولام', img: 'fulham.png', cost: 5000, profit: 300 },
-    { id: 'eng12', cat: 'eng', name: 'تاتنهام', img: 'tottenham.png', cost: 9000, profit: 700 },
-    { id: 'eng13', cat: 'eng', name: 'نیوکاسل', img: 'newcastle.png', cost: 8500, profit: 650 },
-    { id: 'eng14', cat: 'eng', name: 'برایتون', img: 'brighton.png', cost: 6000, profit: 400 },
-    { id: 'eng15', cat: 'eng', name: 'بورنموث', img: 'bournemouth.png', cost: 4500, profit: 250 },
-    { id: 'eng16', cat: 'eng', name: 'لیدز یونایتد', img: 'leeds.png', cost: 5000, profit: 300 },
-    { id: 'eng17', cat: 'eng', name: 'ناتینگهام فارست', img: 'nottingham.png', cost: 4500, profit: 250 },
-    { id: 'eng18', cat: 'eng', name: 'وستهام', img: 'westham.png', cost: 6500, profit: 450 },
-    { id: 'eng19', cat: 'eng', name: 'برنلی', img: 'burnley.png', cost: 4000, profit: 200 },
-    { id: 'eng20', cat: 'eng', name: 'ولورهمپتون', img: 'wolves.png', cost: 5000, profit: 300 },
+    // --- 🇬🇧 لیگ برتر انگلیس (Premier League) ---
+    { id: 'eng_mci', cat: 'eng', name: 'منچستر سیتی', img: 'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg', cost: 15000, profit: 950 },
+    { id: 'eng_ars', cat: 'eng', name: 'آرسنال', img: 'https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg', cost: 14000, profit: 850 },
+    { id: 'eng_liv', cat: 'eng', name: 'لیورپول', img: 'https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg', cost: 13500, profit: 800 },
+    { id: 'eng_che', cat: 'eng', name: 'چلسی', img: 'https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg', cost: 12000, profit: 750 },
+    { id: 'eng_mun', cat: 'eng', name: 'منچستر یونایتد', img: 'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg', cost: 12000, profit: 750 },
+    { id: 'eng_tot', cat: 'eng', name: 'تاتنهام', img: 'https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg', cost: 10000, profit: 600 },
+    { id: 'eng_new', cat: 'eng', name: 'نیوکاسل', img: 'https://upload.wikimedia.org/wikipedia/en/5/56/Newcastle_United_Logo.svg', cost: 9500, profit: 550 },
+    { id: 'eng_avl', cat: 'eng', name: 'استون ویلا', img: 'https://upload.wikimedia.org/wikipedia/en/f/f9/Aston_Villa_FC_crest_%282016%29.svg', cost: 8000, profit: 450 },
+    { id: 'eng_whu', cat: 'eng', name: 'وست هم', img: 'https://upload.wikimedia.org/wikipedia/en/c/c2/West_Ham_United_FC_logo.svg', cost: 7000, profit: 350 },
+    { id: 'eng_bri', cat: 'eng', name: 'برایتون', img: 'https://upload.wikimedia.org/wikipedia/en/f/fd/Brighton_%26_Hove_Albion_logo.svg', cost: 6500, profit: 300 },
 
-    // --- لالیگا اسپانیا (cat: spa) ---
-    { id: 'spa1', cat: 'spa', name: 'رئال مادرید', img: 'real_madrid.png', cost: 15000, profit: 1100 },
-    { id: 'spa2', cat: 'spa', name: 'بارسلونا', img: 'barcelona.png', cost: 14000, profit: 1050 },
-    { id: 'spa3', cat: 'spa', name: 'اتلتیکو مادرید', img: 'atletico.png', cost: 10000, profit: 750 },
-    { id: 'spa4', cat: 'spa', name: 'سویا', img: 'sevilla.png', cost: 7000, profit: 500 },
-    { id: 'spa5', cat: 'spa', name: 'رئال سوسیداد', img: 'sociedad.png', cost: 6500, profit: 450 },
-    { id: 'spa6', cat: 'spa', name: 'ویارئال', img: 'villarreal.png', cost: 6000, profit: 400 },
-    { id: 'spa7', cat: 'spa', name: 'رئال بتیس', img: 'betis.png', cost: 6000, profit: 400 },
-    { id: 'spa8', cat: 'spa', name: 'والنسیا', img: 'valencia.png', cost: 6500, profit: 450 },
-    { id: 'spa9', cat: 'spa', name: 'سلتا ویگو', img: 'celta.png', cost: 5000, profit: 300 },
-    { id: 'spa10', cat: 'spa', name: 'اتلتیک بیلبائو', img: 'bilbao.png', cost: 6500, profit: 450 },
-    { id: 'spa11', cat: 'spa', name: 'مایورکا', img: 'mallorca.png', cost: 4000, profit: 250 },
-    { id: 'spa12', cat: 'spa', name: 'اسپانیول', img: 'espanyol.png', cost: 4500, profit: 280 },
-    { id: 'spa13', cat: 'spa', name: 'کادیس', img: 'cadiz.png', cost: 3500, profit: 200 },
-    { id: 'spa14', cat: 'spa', name: 'اوساسونا', img: 'osasuna.png', cost: 4500, profit: 280 },
-    { id: 'spa15', cat: 'spa', name: 'گرانادا', img: 'granada.png', cost: 4000, profit: 250 },
-    { id: 'spa16', cat: 'spa', name: 'آلاوس', img: 'alaves.png', cost: 3500, profit: 200 },
+    // --- 🇪🇸 لالیگا اسپانیا (La Liga) ---
+    { id: 'spa_rmd', cat: 'spa', name: 'رئال مادرید', img: 'https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg', cost: 18000, profit: 1200 },
+    { id: 'spa_bar', cat: 'spa', name: 'بارسلونا', img: 'https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg', cost: 17000, profit: 1100 },
+    { id: 'spa_atl', cat: 'spa', name: 'اتلتیکو مادرید', img: 'https://upload.wikimedia.org/wikipedia/en/f/f4/Atletico_Madrid_2017_logo.svg', cost: 11000, profit: 650 },
+    { id: 'spa_sev', cat: 'spa', name: 'سویا', img: 'https://upload.wikimedia.org/wikipedia/en/3/3b/Sevilla_FC_logo.svg', cost: 8000, profit: 400 },
+    { id: 'spa_val', cat: 'spa', name: 'والنسیا', img: 'https://upload.wikimedia.org/wikipedia/en/c/ce/Valenciacf.svg', cost: 7500, profit: 380 },
+    { id: 'spa_vil', cat: 'spa', name: 'ویارئال', img: 'https://upload.wikimedia.org/wikipedia/en/7/70/Villarreal_CF_logo.svg', cost: 7000, profit: 350 },
+    { id: 'spa_bet', cat: 'spa', name: 'رئال بتیس', img: 'https://upload.wikimedia.org/wikipedia/en/1/13/Real_betis_logo.svg', cost: 6500, profit: 300 },
 
-    // --- لیگ خلیج فارس (cat: irn) ---
-    { id: 'irn1', cat: 'irn', name: 'سپاهان', img: 'sepahan.png', cost: 3000, profit: 250 },
-    { id: 'irn2', cat: 'irn', name: 'پرسپولیس', img: 'persepolis.png', cost: 3000, profit: 250 },
-    { id: 'irn3', cat: 'irn', name: 'استقلال', img: 'esteghlal.png', cost: 3000, profit: 250 },
-    { id: 'irn4', cat: 'irn', name: 'چادرملو اردکان', img: 'chadormalu.png', cost: 1000, profit: 80 },
-    { id: 'irn5', cat: 'irn', name: 'تراکتور', img: 'tractor.png', cost: 2800, profit: 220 },
-    { id: 'irn6', cat: 'irn', name: 'گل‌گهر', img: 'golgohar.png', cost: 2000, profit: 150 },
-    { id: 'irn7', cat: 'irn', name: 'ملوان', img: 'malavan.png', cost: 1800, profit: 140 },
-    { id: 'irn8', cat: 'irn', name: 'خیبر خرم‌آباد', img: 'kheibar.png', cost: 1200, profit: 90 },
-    { id: 'irn9', cat: 'irn', name: 'فجر سپاسی', img: 'fajr.png', cost: 1200, profit: 90 },
-    { id: 'irn10', cat: 'irn', name: 'فولاد', img: 'foolad.png', cost: 2200, profit: 180 },
-    { id: 'irn11', cat: 'irn', name: 'استقلال خوزستان', img: 'est_khz.png', cost: 1500, profit: 110 },
-    { id: 'irn12', cat: 'irn', name: 'پیکان', img: 'paykan.png', cost: 1000, profit: 80 },
-    { id: 'irn13', cat: 'irn', name: 'آلومینیوم', img: 'aluminium.png', cost: 1600, profit: 120 },
-    { id: 'irn14', cat: 'irn', name: 'ذوب‌آهن', img: 'zobahan.png', cost: 1800, profit: 140 },
-    { id: 'irn15', cat: 'irn', name: 'شمس‌آذر', img: 'shamsazar.png', cost: 1100, profit: 85 },
-    { id: 'irn16', cat: 'irn', name: 'مس رفسنجان', img: 'mes_raf.png', cost: 1500, profit: 110 },
+    // --- 🇮🇷 لیگ برتر ایران (Persian Gulf Pro League) ---
+    { id: 'irn_prs', cat: 'irn', name: 'پرسپولیس', img: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Persepolis_F.C._logo.png', cost: 4000, profit: 250 },
+    { id: 'irn_est', cat: 'irn', name: 'استقلال', img: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Esteghlal_FC_Logo.png', cost: 4000, profit: 250 },
+    { id: 'irn_sep', cat: 'irn', name: 'سپاهان', img: 'https://upload.wikimedia.org/wikipedia/en/a/a2/Sepahan_FC_Logo.png', cost: 3500, profit: 200 },
+    { id: 'irn_tra', cat: 'irn', name: 'تراکتور', img: 'https://upload.wikimedia.org/wikipedia/en/0/06/Tractor_S.C._Logo.png', cost: 3500, profit: 200 },
+    { id: 'irn_foo', cat: 'irn', name: 'فولاد', img: 'https://upload.wikimedia.org/wikipedia/en/3/30/Foolad_FC_Logo.png', cost: 2500, profit: 150 },
+    { id: 'irn_mal', cat: 'irn', name: 'ملوان', img: 'https://upload.wikimedia.org/wikipedia/en/7/7a/Malavan_FC_logo.png', cost: 2000, profit: 120 },
+    { id: 'irn_gol', cat: 'irn', name: 'گل گهر', img: 'https://upload.wikimedia.org/wikipedia/fa/2/25/Gol_Gohar_Sirjan_FC_Logo.png', cost: 2000, profit: 120 },
 
-    // --- نخبگان آسیا (cat: asia) ---
-    { id: 'asia1', cat: 'asia', name: 'الهلال', img: 'alhilal.png', cost: 8000, profit: 600 },
-    { id: 'asia2', cat: 'asia', name: 'الاهلی', img: 'alahli.png', cost: 7000, profit: 500 },
-    { id: 'asia3', cat: 'asia', name: 'الاتحاد', img: 'ittihad.png', cost: 7000, profit: 500 },
-    { id: 'asia4', cat: 'asia', name: 'السد', img: 'alsadd.png', cost: 5000, profit: 350 },
-    { id: 'asia5', cat: 'asia', name: 'الشارجه', img: 'sharjah.png', cost: 4000, profit: 280 },
-    { id: 'asia6', cat: 'asia', name: 'ویسل کوبه', img: 'vissel.png', cost: 4500, profit: 300 },
-    { id: 'asia7', cat: 'asia', name: 'شانگهای پورت', img: 'shanghai.png', cost: 4000, profit: 280 },
+    // --- 🌏 برترین‌های آسیا (AFC Giants) ---
+    { id: 'asa_hil', cat: 'asia', name: 'الهلال', img: 'https://upload.wikimedia.org/wikipedia/en/a/a9/Al-Hilal_Saudi_FC_Logo.svg', cost: 12000, profit: 800 },
+    { id: 'asa_nas', cat: 'asia', name: 'النصر', img: 'https://upload.wikimedia.org/wikipedia/en/d/dc/Al_Nassr_FC_Logo.svg', cost: 11500, profit: 750 },
+    { id: 'asa_iti', cat: 'asia', name: 'الاتحاد', img: 'https://upload.wikimedia.org/wikipedia/en/5/52/Al-Ittihad_Club_logo.svg', cost: 10000, profit: 650 },
+    { id: 'asa_sad', cat: 'asia', name: 'السد قطر', img: 'https://upload.wikimedia.org/wikipedia/en/8/82/Al_Sadd_SC_logo.svg', cost: 9000, profit: 600 },
+    { id: 'asa_kaw', cat: 'asia', name: 'کاوازاکی', img: 'https://upload.wikimedia.org/wikipedia/en/9/93/Kawasaki_Frontale_logo.svg', cost: 8000, profit: 500 },
 
-    // --- فیفا 2026 (cat: fifa) ---
-    { id: 'fifa1', cat: 'fifa', name: 'آرژانتین', img: 'arg.png', cost: 50000, profit: 3000 },
-    { id: 'fifa2', cat: 'fifa', name: 'برزیل', img: 'bra.png', cost: 48000, profit: 2900 },
-    { id: 'fifa3', cat: 'fifa', name: 'فرانسه', img: 'fra.png', cost: 48000, profit: 2900 },
-    { id: 'fifa4', cat: 'fifa', name: 'انگلیس', img: 'eng_nat.png', cost: 45000, profit: 2700 },
-    { id: 'fifa5', cat: 'fifa', name: 'آلمان', img: 'ger.png', cost: 45000, profit: 2700 },
-    { id: 'fifa6', cat: 'fifa', name: 'ایران', img: 'iran.png', cost: 15000, profit: 1000 },
-    { id: 'fifa7', cat: 'fifa', name: 'آمریکا', img: 'usa.png', cost: 20000, profit: 1200 },
-    { id: 'fifa8', cat: 'fifa', name: 'پرتغال', img: 'por.png', cost: 40000, profit: 2500 }
+    // --- 🏆 تیم‌های ملی (World Cup Legends) ---
+    { id: 'fifa_arg', cat: 'fifa', name: 'آرژانتین', img: 'https://upload.wikimedia.org/wikipedia/en/c/c1/Argentina_national_football_team_logo.svg', cost: 60000, profit: 4000 },
+    { id: 'fifa_fra', cat: 'fifa', name: 'فرانسه', img: 'https://upload.wikimedia.org/wikipedia/en/0/0d/Logo_France_national_football_team.svg', cost: 58000, profit: 3800 },
+    { id: 'fifa_bra', cat: 'fifa', name: 'برزیل', img: 'https://upload.wikimedia.org/wikipedia/en/9/99/Brazilian_Football_Confederation_logo.svg', cost: 55000, profit: 3600 },
+    { id: 'fifa_eng', cat: 'fifa', name: 'انگلیس', img: 'https://upload.wikimedia.org/wikipedia/en/8/87/England_national_football_team_crest.svg', cost: 50000, profit: 3400 },
+    { id: 'fifa_por', cat: 'fifa', name: 'پرتغال', img: 'https://upload.wikimedia.org/wikipedia/en/5/5f/Portuguese_Football_Federation.svg', cost: 48000, profit: 3200 },
+    { id: 'fifa_ger', cat: 'fifa', name: 'آلمان', img: 'https://upload.wikimedia.org/wikipedia/en/e/e3/DFB-Logo_2011.svg', cost: 45000, profit: 3000 },
+    { id: 'fifa_ita', cat: 'fifa', name: 'ایتالیا', img: 'https://upload.wikimedia.org/wikipedia/commons/b/b4/Logo_Italy_National_Football_Team_2023.png', cost: 42000, profit: 2800 },
 ];
 
+// --- تنظیمات اولیه کاربر ---
 let user = {
     username: "Guest",
     coins: 0,
@@ -102,55 +73,86 @@ let user = {
     maxEnergy: 1000,
     profitPerHour: 0,
     tapLevel: 1,
-    purchasedTeams: []
+    purchasedTeams: [],
+    lastLogin: Date.now()
 };
 
 function initGame() {
-    const saved = localStorage.getItem('football_kombat_save');
-    if (saved) user = JSON.parse(saved);
+    const saved = localStorage.getItem('football_kombat_save_v3'); // ورژن سیو رو بردم بالا
+    if (saved) {
+        let savedUser = JSON.parse(saved);
+        // ادغام سیو با مقادیر پیش فرض برای جلوگیری از باگ نسخه‌های قبلی
+        user = { ...user, ...savedUser };
+    }
 
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         user.username = tg.initDataUnsafe.user.first_name;
     }
     document.getElementById('username').innerText = user.username;
 
-    // شروع لوپ‌ها
-    setInterval(saveData, 5000);
-    setInterval(gameLoop, 1000); // بازیابی انرژی و سود
+    // محاسبه درآمد آفلاین (وقتی کاربر نبود)
+    calculateOfflineProfit();
+
+    setInterval(saveData, 3000); // ذخیره خودکار هر 3 ثانیه
+    setInterval(gameLoop, 1000); // لوپ اصلی بازی
     
     updateUI();
-    filterShop('eng'); // پیش‌فرض تب انگلیس باز باشه
+    filterShop('eng'); // پیش فرض روی لیگ انگلیس
+}
+
+function calculateOfflineProfit() {
+    const now = Date.now();
+    const last = user.lastLogin || now;
+    const diffSeconds = (now - last) / 1000;
+    
+    // اگر بیشتر از 5 دقیقه آفلاین بوده
+    if (diffSeconds > 60 && user.profitPerHour > 0) {
+        const earned = Math.floor((user.profitPerHour / 3600) * diffSeconds);
+        if (earned > 0) {
+            user.coins += earned;
+            tg.showAlert(`خوش برگشتی رفیق! 🤑\nدر نبودت ${formatNumber(earned)} سکه جمع شد.`);
+        }
+    }
 }
 
 function updateUI() {
-    // اعداد
+    user.lastLogin = Date.now();
+    
+    // بروزرسانی اعداد
     document.getElementById('total-coins').innerText = Math.floor(user.coins).toLocaleString();
     document.getElementById('profit-per-hour').innerText = "+" + formatNumber(user.profitPerHour);
     document.getElementById('earn-per-tap').innerText = user.tapLevel;
     document.getElementById('current-energy').innerText = Math.floor(user.energy);
-    
-    // لیگ و عکس کاراکتر
-    let leagueIdx = LEAGUES.findIndex(l => user.coins < l.score) - 1;
-    if (leagueIdx < 0) leagueIdx = LEAGUES.length - 1; 
-    if (user.coins < LEAGUES[0].score) leagueIdx = -1;
-    
-    let activeLeague = LEAGUES[Math.max(0, leagueIdx)];
-    let nextLeague = LEAGUES[leagueIdx + 1];
+    document.getElementById('max-energy').innerText = user.maxEnergy;
 
-    document.getElementById('league-name').innerText = activeLeague.name;
+    // محاسبه لیگ فعلی
+    let currentLeague = LEAGUES[0];
+    let nextLeague = LEAGUES[1];
     
-    // فقط اگه عکس تغییر کرد عوض کن
-    const charImg = document.getElementById('main-character');
-    if (!charImg.src.includes(activeLeague.img)) charImg.src = activeLeague.img;
+    for (let i = 0; i < LEAGUES.length; i++) {
+        if (user.coins >= LEAGUES[i].score) {
+            currentLeague = LEAGUES[i];
+            nextLeague = LEAGUES[i+1] || null;
+        }
+    }
 
-    // پروگرس بار
+    document.getElementById('league-name').innerText = currentLeague.name;
+    // اینجا میتونی عکس لیگ رو هم عوض کنی اگه خواستی
+    // document.getElementById('league-icon').src = currentLeague.img;
+
+    // نوار پیشرفت لول
     if (nextLeague) {
-        document.getElementById('coins-to-levelup').innerText = formatNumber(nextLeague.score);
-        let pct = (user.coins / nextLeague.score) * 100;
+        let prevScore = currentLeague.score;
+        let targetScore = nextLeague.score;
+        let pct = ((user.coins - prevScore) / (targetScore - prevScore)) * 100;
+        if (pct < 0) pct = 0;
+        if (pct > 100) pct = 100;
+        
         document.getElementById('level-progress-bar').style.width = pct + "%";
+        document.getElementById('coins-to-levelup').innerText = formatNumber(targetScore - user.coins);
     } else {
-        document.getElementById('coins-to-levelup').innerText = "MAX";
         document.getElementById('level-progress-bar').style.width = "100%";
+        document.getElementById('coins-to-levelup').innerText = "MAX";
     }
 }
 
@@ -158,59 +160,80 @@ function handleTap(event) {
     if (user.energy >= user.tapLevel) {
         user.energy -= user.tapLevel;
         user.coins += user.tapLevel;
-        if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
         
-        // افکت متن
+        // ویبره برای حس بهتر
+        if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+        
+        // افکت عدد پرنده
         const rect = event.currentTarget.getBoundingClientRect();
-        const x = event.clientX - rect.left;
+        const offsetX = (Math.random() - 0.5) * 50; 
+        const x = event.clientX - rect.left + offsetX;
         const y = event.clientY - rect.top;
+        
         const floatTxt = document.createElement('div');
         floatTxt.className = 'floating-text';
         floatTxt.innerText = '+' + user.tapLevel;
         floatTxt.style.left = x + 'px';
         floatTxt.style.top = y + 'px';
         event.currentTarget.appendChild(floatTxt);
-        setTimeout(() => floatTxt.remove(), 1000);
         
+        setTimeout(() => floatTxt.remove(), 800);
         updateUI();
     }
 }
 
 function gameLoop() {
-    // انرژی
-    if (user.energy < user.maxEnergy) user.energy += (user.maxEnergy / 300);
-    // سود ساعتی
-    if (user.profitPerHour > 0) user.coins += (user.profitPerHour / 3600);
+    // پر شدن انرژی
+    if (user.energy < user.maxEnergy) {
+        user.energy += (user.maxEnergy / 300); // 5 دقیقه تا پر شدن کامل
+    }
+    
+    // اضافه شدن سود ساعتی
+    if (user.profitPerHour > 0) {
+        user.coins += (user.profitPerHour / 3600);
+    }
+    
     updateUI();
 }
 
 function saveData() {
-    localStorage.setItem('football_kombat_save', JSON.stringify(user));
+    localStorage.setItem('football_kombat_save_v3', JSON.stringify(user));
 }
 
-// مدیریت فروشگاه
 function filterShop(category) {
-    // فعال کردن تب
+    // اکتیو کردن تب
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    event.currentTarget.classList.add('active'); // دکمه کلیک شده
+    // پیدا کردن دکمه‌ای که این تابع رو صدا زده (اگر با کلیک باشه)
+    const btns = document.querySelectorAll('.cat-btn');
+    btns.forEach(btn => {
+        if(btn.getAttribute('onclick').includes(category)) btn.classList.add('active');
+    });
 
     const container = document.getElementById('team-cards-container');
     container.innerHTML = '';
 
     const filtered = TEAMS_DB.filter(t => t.cat === category);
     
+    if(filtered.length === 0) {
+        container.innerHTML = '<p style="color:#777; width:200%; text-align:center; margin-top:30px;">تیمی یافت نشد!</p>';
+        return;
+    }
+
     filtered.forEach(team => {
         const isOwned = user.purchasedTeams.includes(team.id);
         const div = document.createElement('div');
-        div.className = 'team-card';
-        // مسیر عکس: assets/teams/name.png (اگر نبود آیکون پیش‌فرض)
+        div.className = 'team-card glass-panel'; // اضافه کردن کلاس پنل شیشه‌ای برای زیبایی
+        
+        // هندل کردن ارور عکس با عکس پیش‌فرض
+        const defaultImg = 'https://img.icons8.com/color/96/football2.png';
+        
         div.innerHTML = `
-            <img src="assets/teams/${team.img}" class="team-logo" onerror="this.src='assets/coin.png'">
+            <img src="${team.img}" class="team-logo" onerror="this.src='${defaultImg}'" alt="${team.name}">
             <h4>${team.name}</h4>
-            <p style="font-size:10px; color:#aaa">سود: +${team.profit}</p>
+            <p style="font-size:11px; color:#aaa; margin-bottom:10px">سود: +${formatNumber(team.profit)} 💰</p>
             ${isOwned ? 
-                `<button class="buy-btn" disabled>خریداری شد ✅</button>` : 
-                `<button class="buy-btn" onclick="buyTeam('${team.id}')">${formatNumber(team.cost)} سکه</button>`
+                `<button class="buy-btn" disabled style="background:rgba(255,255,255,0.1); color:#fff; border:1px solid #555;">✅ مالکی</button>` : 
+                `<button class="buy-btn" onclick="buyTeam('${team.id}')">خرید ${formatNumber(team.cost)}</button>`
             }
         `;
         container.appendChild(div);
@@ -219,46 +242,92 @@ function filterShop(category) {
 
 function buyTeam(id) {
     const team = TEAMS_DB.find(t => t.id === id);
+    if (!team) return;
+
+    if (user.purchasedTeams.includes(id)) return; // قبلا خریده
+
     if (user.coins >= team.cost) {
         user.coins -= team.cost;
         user.profitPerHour += team.profit;
         user.purchasedTeams.push(id);
         saveData();
-        updateUI();
-        // رفرش کردن تب فعلی برای غیرفعال کردن دکمه
-        document.querySelector('.cat-btn.active').click();
-        alert(`تیم ${team.name} خریداری شد! 🎉`);
+        
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+        
+        // آپدیت همون لحظه لیست
+        filterShop(team.cat);
+        
+        tg.showAlert(`ایول! تیم ${team.name} رو خریدی 🎉\nسود ساعتیت رفت بالا!`);
     } else {
-        alert("سکه کافی نداری! ❌");
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
+        tg.showAlert("پول کم داری رفیق! ❌\nباید بیشتر تپ بزنی!");
     }
 }
 
-// مدیریت تب‌های پایین
+function upgradeBoost(type) {
+    // سیستم قیمت تصاعدی برای ارتقا
+    let baseCost = 2000;
+    
+    // محاسبه قیمت بر اساس لول فعلی کاربر (ساده)
+    let cost = baseCost * (type === 'multitap' ? user.tapLevel : (user.maxEnergy/500 - 1));
+    if(cost < 2000) cost = 2000;
+
+    if(user.coins >= cost) {
+        user.coins -= cost;
+        if(type === 'multitap') {
+            user.tapLevel += 1;
+            tg.showAlert(`قدرت ضربه شد: ${user.tapLevel} 💪`);
+        }
+        if(type === 'energy') {
+            user.maxEnergy += 500;
+            tg.showAlert(`انرژی مکس شد: ${user.maxEnergy} 🔋`);
+        }
+        saveData();
+        updateUI();
+    } else {
+        tg.showAlert(`برای ارتقا ${formatNumber(cost)} سکه میخوای!`);
+    }
+}
+
 function openTab(tabName) {
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-    event.currentTarget.classList.add('active');
+    const navItems = document.querySelectorAll('.nav-item');
+    
+    // مپ کردن ایندکس‌ها
+    let idx = 0;
+    if(tabName === 'shop') idx = 1;
+    if(tabName === 'upgrade') idx = 2;
+    if(tabName === 'friends') idx = 3;
+    
+    navItems[idx].classList.add('active');
 
-    // مخفی کردن همه ویوها
     document.querySelectorAll('.full-screen-view').forEach(v => v.classList.add('hidden'));
-    document.getElementById('main-view').classList.add('hidden');
-
+    
     if (tabName === 'game') {
         document.getElementById('main-view').classList.remove('hidden');
-    } else if (tabName === 'shop') {
-        document.getElementById('shop-view').classList.remove('hidden');
-    } else if (tabName === 'upgrade') {
-        document.getElementById('upgrade-view').classList.remove('hidden');
-    } else if (tabName === 'friends') {
-        document.getElementById('friends-view').classList.remove('hidden');
+    } else {
+        const view = document.getElementById(tabName + '-view');
+        view.classList.remove('hidden');
+        // انیمیشن اسلاید
+        view.style.animation = 'none';
+        view.offsetHeight; /* trigger reflow */
+        view.style.animation = 'slideUp 0.3s ease-out';
     }
+    
+    if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
 }
 
 function formatNumber(num) {
+    if (num >= 1000000000) return (num / 1000000000).toFixed(1) + 'B';
     if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
     if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-    return Math.floor(num);
+    return Math.floor(num).toString();
 }
 
-// استارت
-initGame();
+// جلوگیری از زوم و اسکرول اضافی در iOS
+window.addEventListener('touchmove', function(event) {
+    if (event.scale !== 1) { event.preventDefault(); }
+}, { passive: false });
 
+// شروع بازی
+initGame();
