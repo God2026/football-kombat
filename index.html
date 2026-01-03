@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Football Kombat</title>
+    <title>Football Legend</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="app-container">
+    <div class="app-container" id="main-view">
         
         <div class="top-header">
             <div class="user-info">
@@ -18,12 +17,11 @@
                     <img src="assets/1.png" id="avatar-img" alt="User">
                 </div>
                 <div class="user-details">
-                    <span id="username">در حال لود...</span>
-                    </div>
+                    <span id="username">بازیکن</span>
+                </div>
             </div>
-            <div class="exchange-badge">
-                <span class="binance-logo">🔶</span>
-                <span>Binance</span>
+            <div class="league-badge">
+                <span id="league-name">تازه کار</span>
             </div>
         </div>
 
@@ -40,7 +38,7 @@
                 <div class="value highlight-color" id="coins-to-levelup">5K</div>
             </div>
             <div class="stat-box">
-                <span class="label">سود هر تپ</span>
+                <span class="label">قدرت ضربه</span>
                 <div class="value">
                     <img src="assets/coin.png" class="tiny-coin">
                     +<span id="earn-per-tap">1</span>
@@ -51,11 +49,6 @@
         <div class="main-balance">
             <img src="assets/coin.png" class="main-coin-icon">
             <span id="total-coins">0</span>
-        </div>
-
-        <div class="league-info">
-            <span id="league-name" class="league-title">تازه کار</span>
-            <span id="league-level">Level 1/11</span>
         </div>
 
         <div class="progress-container">
@@ -72,43 +65,62 @@
                 <span class="lightning">⚡</span>
                 <span id="current-energy">1000</span> / <span id="max-energy">1000</span>
             </div>
-            <div class="boost-btn">
-                🚀 Boost
-            </div>
         </div>
 
         <div style="height: 80px;"></div>
+    </div>
 
+    <div id="shop-view" class="full-screen-view hidden">
+        <h2>خرید تیم 🏟️</h2>
+        <div class="category-tabs">
+            <button class="cat-btn active" onclick="filterShop('eng')">انگلستان</button>
+            <button class="cat-btn" onclick="filterShop('spa')">لالیگا</button>
+            <button class="cat-btn" onclick="filterShop('irn')">ایران</button>
+            <button class="cat-btn" onclick="filterShop('asia')">آسیا</button>
+            <button class="cat-btn" onclick="filterShop('fifa')">جهانی</button>
+        </div>
+        <div id="team-cards-container" class="cards-grid"></div>
+        <div style="height: 100px;"></div>
+    </div>
+
+    <div id="upgrade-view" class="full-screen-view hidden">
+        <h2>ارتقای تیم 💪</h2>
+        <div class="cards-grid">
+            <div class="team-card">
+                <h3>مولتی تپ (ضربه قوی‌تر)</h3>
+                <button class="buy-btn" onclick="upgradeBoost('multitap')">ارتقا (2000 سکه)</button>
+            </div>
+            <div class="team-card">
+                <h3>انرژی بیشتر</h3>
+                <button class="buy-btn" onclick="upgradeBoost('energy')">ارتقا (2000 سکه)</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="friends-view" class="full-screen-view hidden">
+        <h2>دوستان 👥</h2>
+        <div class="friend-box">
+            <p>لینک دعوت خود را بفرستید و سکه بگیرید!</p>
+            <button class="buy-btn">کپی لینک دعوت</button>
+        </div>
     </div>
 
     <div class="bottom-nav">
         <div class="nav-item active" onclick="openTab('game')">
-            <div class="icon">🐹</div>
-            <span>Exchange</span>
+            <div class="icon">⚽</div>
+            <span>بازی</span>
         </div>
-        <div class="nav-item" onclick="openTab('mine')">
-            <div class="icon">⛏️</div>
-            <span>Mine</span>
+        <div class="nav-item" onclick="openTab('shop')">
+            <div class="icon">🏟️</div>
+            <span>خرید تیم</span>
+        </div>
+        <div class="nav-item" onclick="openTab('upgrade')">
+            <div class="icon">⬆️</div>
+            <span>ارتقای تیم</span>
         </div>
         <div class="nav-item" onclick="openTab('friends')">
             <div class="icon">👥</div>
-            <span>Friends</span>
-        </div>
-        <div class="nav-item" onclick="openTab('earn')">
-            <div class="icon">💰</div>
-            <span>Earn</span>
-        </div>
-        <div class="nav-item" onclick="openTab('airdrop')">
-            <div class="icon">💎</div>
-            <span>Airdrop</span>
-        </div>
-    </div>
-
-    <div id="mine-modal" class="modal hidden">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('mine')">&times;</span>
-            <h2>خرید تیم و کارت 🏟️</h2>
-            <div id="team-cards-container" class="cards-grid"></div>
+            <span>دوستان</span>
         </div>
     </div>
 
