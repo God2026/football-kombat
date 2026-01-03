@@ -1,89 +1,301 @@
-/* ظرفیت نمایش کارت‌ها به صورت دو ستونه */
-#teams-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* دو ستون مساوی */
-    gap: 12px;
-    padding: 15px;
+/* ریسیت کردن استایل‌ها */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* استایل کارت تیم‌ها دقیقا شبیه همستر */
-.team-card {
-    background-color: #272a2f; /* رنگ تیره کارت‌های همستر */
-    border-radius: 20px;
-    padding: 12px;
+body {
+    background-color: #000;
+    color: #fff;
+    overflow: hidden; /* جلوگیری از اسکرول کل صفحه */
+}
+
+#app-container {
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* تراز از سمت راست/چپ */
-    position: relative;
-    border-bottom: 4px solid #1a1c20;
+    background: radial-gradient(circle at top, #1e293b 0%, #000 100%);
 }
 
-/* تصویر کوچک تیم در سمت بالا */
-.team-logo {
+/* هدر امتیازات */
+.header-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.stat-card {
+    background: #1c1f24;
+    border-radius: 12px;
+    padding: 8px 5px;
+    text-align: center;
+    border-bottom: 2px solid #334155;
+}
+
+.stat-label {
+    font-size: 9px;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+}
+
+.text-green { color: #22c55e; }
+.text-blue { color: #3b82f6; }
+.mini-coin { width: 12px; height: 12px; }
+
+/* بخش بالانس سکه */
+.main-balance {
+    text-align: center;
+    padding: 20px 10px;
+}
+
+.coin-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.main-coin-icon {
     width: 45px;
     height: 45px;
+}
+
+.main-balance h1 {
+    font-size: 38px;
+    font-weight: 800;
+}
+
+.league-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 25px;
+    font-size: 12px;
+    color: #cbd5e1;
+    margin-bottom: 5px;
+}
+
+.progress-container {
+    width: 85%;
+    height: 12px;
+    background: #1e293b;
+    border-radius: 10px;
+    margin: 0 auto;
+    border: 1px solid #334155;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 10%;
+    height: 100%;
+    background: linear-gradient(90deg, #facc15, #eab308);
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+}
+
+/* کلیکر اصلی */
+.clicker-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.circle-outer {
+    width: 280px;
+    height: 280px;
+    background: #282f39;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+    transition: transform 0.05s active;
+}
+
+.circle-outer::after {
+    content: '';
+    position: absolute;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 10px solid rgba(255, 255, 255, 0.03);
+}
+
+.circle-inner {
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, #334155 0%, #0f172a 100%);
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.character-img {
+    width: 85%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* کارت‌های تیم‌ها (دو ستونه) */
+.cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 15px;
+    padding-bottom: 100px;
+    overflow-y: auto;
+}
+
+.team-card {
+    background: #1c1f24;
+    border-radius: 20px;
+    padding: 12px;
+    position: relative;
+    border-bottom: 4px solid #101215;
+}
+
+.team-logo-img {
+    width: 50px;
+    height: 50px;
     margin-bottom: 8px;
 }
 
-/* نام تیم */
-.team-name {
-    color: white;
+.team-card h4 {
     font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.p-label {
+    font-size: 10px;
+    color: #94a3b8;
+}
+
+.p-amount {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #334155;
+    padding-top: 8px;
+}
+
+.lvl-badge { font-size: 10px; color: #94a3b8; }
+
+.price-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* نوار انرژی پایین */
+.energy-bar-container {
+    padding: 10px 30px 30px;
+}
+
+.energy-text {
+    text-align: left;
+    font-size: 14px;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-/* سود در ساعت (Profit per hour) */
-.profit-text {
-    color: #848b94;
-    font-size: 10px;
-    margin-bottom: 4px;
+.energy-fill {
+    height: 8px;
+    background: #facc15;
+    border-radius: 10px;
+    transition: width 0.3s;
 }
 
-.profit-value {
+/* تب‌های اسکرولی */
+.tabs-scroll {
     display: flex;
-    align-items: center;
-    gap: 4px;
+    gap: 10px;
+    padding: 10px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.tab-btn {
+    background: #1e293b;
+    border: none;
+    color: #94a3b8;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.tab-btn.active {
+    background: #3b82f6;
     color: white;
-    font-size: 11px;
-    font-weight: bold;
 }
 
-.profit-value img {
-    width: 12px; /* آیکون کوچک سکه */
-}
-
-/* خط جداکننده و بخش لول و قیمت */
-.card-footer {
+/* منوی ثابت پایین */
+.bottom-menu {
+    position: fixed;
+    bottom: 0;
     width: 100%;
-    margin-top: 10px;
-    padding-top: 8px;
-    border-top: 1px solid #3d434d;
+    background: #1c1f24;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around;
+    padding: 10px 0 20px;
+    border-top: 1px solid #334155;
 }
 
-.lvl-text {
-    color: #848b94;
-    font-size: 11px;
-    font-weight: bold;
-}
-
-.price-box {
+.nav-btn {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 4px;
-    color: white;
-    font-size: 11px;
-    border-left: 1px solid #3d434d;
-    padding-right: 10px;
+    color: #94a3b8;
+    font-size: 10px;
 }
 
-/* دکمه خرید که کل کارت رو پوشش میده */
-.buy-btn {
+.nav-btn.active { color: #fff; }
+.nav-icon { font-size: 20px; margin-bottom: 4px; }
+
+.view-hidden { display: none; }
+
+/* انیمیشن اعداد شناور */
+.float-text {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    opacity: 0;
-    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    pointer-events: none;
+    animation: floatUp 0.8s ease-out forwards;
+    z-index: 100;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100px); opacity: 0; }
 }
