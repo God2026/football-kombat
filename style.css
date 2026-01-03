@@ -1,280 +1,56 @@
-/* ریست کلی */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Tahoma', sans-serif; /* فونت ساده */
-    user-select: none; /* جلوگیری از انتخاب متن */
-}
-
-body {
-    background-color: #000;
-    color: white;
-    overflow: hidden; /* حذف اسکرول اضافه */
-}
-
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tahoma', sans-serif; user-select: none; }
+body { background-color: #000; color: white; overflow: hidden; }
 .app-container {
-    background: radial-gradient(circle at center, #1c1f24 0%, #0d0e10 100%);
-    height: 100vh;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
+    background: radial-gradient(circle at center, #10243e 0%, #000 100%);
+    height: 100vh; padding: 15px; display: flex; flex-direction: column; overflow-y: auto;
 }
-
-/* Header */
-.top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+.hidden { display: none !important; }
+.full-screen-view {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #1c1f24; padding: 20px; overflow-y: auto; z-index: 50;
+    padding-bottom: 100px;
 }
+/* هدر و آمار */
+.top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.user-info { display: flex; align-items: center; background: #272a2f; padding: 5px 10px; border-radius: 12px; }
+.avatar-box img { width: 30px; height: 30px; border-radius: 8px; }
+.user-details { margin-right: 10px; font-size: 14px; font-weight: bold; }
+.league-badge { background: #d4af37; color: #000; padding: 5px 10px; border-radius: 8px; font-size: 12px; font-weight: bold;}
 
-.user-info {
-    display: flex;
-    align-items: center;
-    background: #272a2f;
-    padding: 5px 10px;
-    border-radius: 12px;
-}
+.stats-row { display: flex; gap: 10px; margin-bottom: 20px; }
+.stat-box { background: #272a2f; flex: 1; padding: 10px; border-radius: 12px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.stat-box .label { font-size: 10px; color: #8b8e93; }
+.stat-box .value { font-size: 12px; font-weight: bold; display: flex; align-items: center; gap: 3px; margin-top: 5px;}
+.tiny-coin { width: 12px; height: 12px; }
+.warning-color { color: #f3ba2f; } .highlight-color { color: #5b97f7; }
 
-.avatar-box img {
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    background: #444;
-}
+.main-balance { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 10px; }
+.main-coin-icon { width: 40px; height: 40px; }
+#total-coins { font-size: 32px; font-weight: bold; }
 
-.user-details {
-    margin-right: 10px;
-    font-size: 14px;
-    font-weight: bold;
-}
+.progress-container { background: #2f3339; height: 8px; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+.progress-bar { background: #5b97f7; height: 100%; transition: width 0.3s; }
 
-.exchange-badge {
-    background: #272a2f;
-    padding: 8px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 12px;
-}
+/* کاراکتر اصلی */
+.tap-area { flex-grow: 1; display: flex; justify-content: center; align-items: center; position: relative; cursor: pointer; }
+.circle-bg { position: absolute; width: 260px; height: 260px; background: radial-gradient(rgba(91,151,247,0.3), transparent 70%); border-radius: 50%; }
+#main-character { width: 280px; z-index: 2; transition: transform 0.1s; }
+#main-character:active { transform: scale(0.95); }
 
-/* Stats Row */
-.stats-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.stat-box {
-    background: #272a2f;
-    flex: 1;
-    padding: 10px;
-    border-radius: 12px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.stat-box .label {
-    font-size: 10px;
-    color: #8b8e93;
-    margin-bottom: 5px;
-}
-
-.stat-box .value {
-    font-size: 13px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-}
-
-.tiny-coin { width: 14px; height: 14px; }
-.warning-color { color: #f3ba2f; }
-.highlight-color { color: #5b97f7; }
-
-/* Main Balance */
-.main-balance {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.main-coin-icon { width: 45px; height: 45px; }
-#total-coins { font-size: 38px; font-weight: bold; font-family: monospace; }
-
-.league-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: #fff;
-    margin-bottom: 5px;
-    padding: 0 5px;
-}
-
-/* Progress Bar */
-.progress-container {
-    background: #2f3339;
-    height: 12px;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 20px;
-    border: 1px solid #3d4252;
-}
-
-.progress-bar {
-    background: linear-gradient(90deg, #5b54e7, #a06af9);
-    height: 100%;
-    transition: width 0.3s ease;
-    box-shadow: 0 0 10px rgba(160, 106, 249, 0.5);
-}
-
-/* Tap Area */
-.tap-area {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-}
-
-.circle-bg {
-    position: absolute;
-    width: 280px;
-    height: 280px;
-    background: radial-gradient(circle, rgba(91, 151, 247, 0.2) 0%, rgba(0,0,0,0) 70%);
-    border-radius: 50%;
-    z-index: 0;
-}
-
-#main-character {
-    width: 85%; /* بزرگتر کردن کاراکتر */
-    max-width: 350px;
-    z-index: 1;
-    transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
-}
-
-#main-character:active {
-    transform: scale(0.95) translateY(5px);
-}
-
-/* Energy */
-.energy-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.energy-box {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.boost-btn {
-    background: linear-gradient(45deg, #ff4b1f, #ff9068);
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-/* Bottom Nav */
-.bottom-nav {
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 94%;
-    background: #272a2f;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-    z-index: 100;
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #6e7279;
-    font-size: 10px;
-    gap: 4px;
-    cursor: pointer;
-}
-
-.nav-item .icon { font-size: 22px; }
+/* نویگیشن */
+.bottom-nav { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); width: 95%; background: #272a2f; border-radius: 15px; display: flex; justify-content: space-around; padding: 10px 0; z-index: 100; box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
+.nav-item { display: flex; flex-direction: column; align-items: center; color: #6e7279; font-size: 11px; cursor: pointer; }
 .nav-item.active { color: white; }
-.nav-item.active .icon { filter: drop-shadow(0 0 5px white); }
+.nav-item .icon { font-size: 20px; margin-bottom: 4px; }
 
-/* Floating Text Animation */
-.floating-text {
-    position: absolute;
-    color: white;
-    font-weight: bold;
-    font-size: 24px;
-    animation: floatUp 1s ease-out forwards;
-    pointer-events: none;
-    z-index: 10;
-}
-
-@keyframes floatUp {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
-}
-
-/* Modals */
-.modal {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.9);
-    z-index: 200;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end; /* Sheet style */
-}
-.hidden { display: none; }
-.modal-content {
-    background: #1c1f24;
-    width: 100%;
-    height: 80%;
-    border-radius: 20px 20px 0 0;
-    padding: 20px;
-    overflow-y: auto;
-    position: relative;
-    animation: slideUp 0.3s ease;
-}
-.close-btn { position: absolute; top: 15px; left: 15px; font-size: 24px; color: #aaa; cursor: pointer;}
-
-@keyframes slideUp { from {transform: translateY(100%);} to {transform: translateY(0);} }
-
-.cards-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 20px;
-}
-.team-card {
-    background: #2b2e38;
-    padding: 15px;
-    border-radius: 12px;
-    text-align: center;
-    border: 1px solid #3d4252;
-}
-.buy-btn {
-    background: #007aff; color: white; border: none; padding: 8px; width: 100%; border-radius: 8px; margin-top: 5px;
-}
+/* استایل فروشگاه */
+.category-tabs { display: flex; gap: 5px; overflow-x: auto; margin-bottom: 15px; padding-bottom: 5px; }
+.cat-btn { background: #2b2e38; color: #fff; border: 1px solid #444; padding: 8px 12px; border-radius: 8px; white-space: nowrap; cursor: pointer; }
+.cat-btn.active { background: #5b97f7; border-color: #5b97f7; }
+.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.team-card { background: #2b2e38; padding: 10px; border-radius: 10px; text-align: center; border: 1px solid #3d4252; display: flex; flex-direction: column; align-items: center; }
+.team-logo { width: 50px; height: 50px; object-fit: contain; margin-bottom: 5px; border-radius: 50%; background: #1c1f24; padding: 2px;}
+.buy-btn { background: #007aff; color: white; border: none; padding: 8px; width: 100%; border-radius: 8px; margin-top: auto; font-size: 12px; }
+.buy-btn:disabled { background: #555; cursor: not-allowed; }
+.floating-text { position: absolute; color: white; font-weight: bold; font-size: 24px; animation: floatUp 1s ease-out forwards; pointer-events: none; z-index: 10; }
+@keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-80px); opacity: 0; } }
