@@ -3,58 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Football Kombat</title>
+    <title>Football Legend | فوتبالیست افسانه‌ای</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div id="app">
-        <div class="header">
-            <div class="stat-box"><span>سود هر ضربه</span><br><strong>+1</strong></div>
-            <div class="stat-box"><span>سکه برای لول‌آپ</span><br><strong>100K</strong></div>
-            <div class="stat-box text-green"><span>سود در ساعت</span><br><strong>0</strong></div>
-        </div>
-
-        <div class="main-score">
-            <img src="assets/coin.png" width="40">
-            <h1 id="total-coins">0</h1>
-        </div>
-
-        <div id="main-view" class="view">
-            <div class="circle-container" onclick="handleTap(event)">
-                <img id="main-character" src="assets/leagues/1.png" class="character-img">
-            </div>
-            <div class="energy-section">
-                <span>⚡ <span id="current-energy">1000</span> / 1000</span>
-            </div>
-        </div>
-
-        <div id="shop-view" class="view hidden">
-            <div class="category-tabs">
-                <button class="cat-btn active" onclick="filterShop('eng')">انگستان</button>
-                <button class="cat-btn" onclick="filterShop('spa')">لالیگا</button>
-                <button class="cat-btn" onclick="filterShop('irn')">ایران</button>
-                <button class="cat-btn" onclick="filterShop('asia')">آسیا</button>
-            </div>
-            <div id="team-cards-container" class="grid-container"></div>
-        </div>
-
-        <div id="boost-view" class="view hidden">
-            <h2 class="section-title">ارتقا</h2>
-            <div class="boost-card" onclick="upgradeTap()">
-                <div class="boost-info">
-                    <strong>مولتی تپ</strong><br>
-                    <span>قیمت: 2000 سکه</span>
+    <div id="app-container">
+        
+        <header class="header-stats">
+            <div class="stat-card">
+                <span class="stat-label">سود هر ضربه</span>
+                <div class="stat-value">
+                    <img src="assets/coin.png" class="mini-coin">
+                    <span id="tap-profit">+1</span>
                 </div>
-                <button class="boost-buy">ارتقا</button>
             </div>
-        </div>
+            <div class="stat-card">
+                <span class="stat-label">سکه برای لول‌آپ</span>
+                <div class="stat-value text-blue" id="needed-coins">50.0K</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">سود در ساعت</span>
+                <div class="stat-value text-green">
+                    <img src="assets/coin.png" class="mini-coin">
+                    <span id="hour-profit">0</span>
+                </div>
+            </div>
+        </header>
 
-        <nav class="bottom-nav">
-            <div class="nav-item" onclick="openTab('game')">🎮<span>بازی</span></div>
-            <div class="nav-item" onclick="openTab('shop')">🏟️<span>تیم‌ها</span></div>
-            <div class="nav-item" onclick="openTab('boost')">🚀<span>ارتقا</span></div>
+        <section class="main-balance">
+            <div class="coin-display">
+                <img src="assets/coin.png" alt="Coin" class="main-coin-icon">
+                <h1 id="total-balance">0</h1>
+            </div>
+            <div class="league-info">
+                <span id="league-name">تازه کار</span>
+                <span class="rank-text">رتبه <span id="rank-number">1</span>/10</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="level-progress"></div>
+            </div>
+        </section>
+
+        <main id="content-area">
+            
+            <div id="game-view" class="view-active">
+                <div class="clicker-wrapper">
+                    <div class="circle-outer" id="tap-area">
+                        <div class="circle-inner">
+                            <img id="character-img" src="assets/leagues/1.png" alt="Character">
+                        </div>
+                    </div>
+                </div>
+                <div class="energy-bar-container">
+                    <div class="energy-text">
+                        <span>⚡ <span id="current-energy">1000</span> / <span id="max-energy">1000</span></span>
+                    </div>
+                    <div class="energy-fill" id="energy-fill"></div>
+                </div>
+            </div>
+
+            <div id="shop-view" class="view-hidden">
+                <div class="tabs-scroll">
+                    <button class="tab-btn active" onclick="changeCategory('eng', event)">انگلستان</button>
+                    <button class="tab-btn" onclick="changeCategory('spa', event)">لالیگا</button>
+                    <button class="tab-btn" onclick="changeCategory('irn', event)">ایران</button>
+                    <button class="tab-btn" onclick="changeCategory('asia', event)">آسیا</button>
+                    <button class="tab-btn" onclick="changeCategory('fifa', event)">جهانی</button>
+                </div>
+                <div class="cards-grid" id="teams-grid">
+                    </div>
+            </div>
+
+            <div id="boost-view" class="view-hidden">
+                <div class="boost-header">
+                    <h2>ارتقا قدرت</h2>
+                </div>
+                <div class="boost-list">
+                    <div class="boost-item" onclick="applyBoost('multitap')">
+                        <div class="boost-icon">👆</div>
+                        <div class="boost-details">
+                            <strong>مولتی تپ</strong>
+                            <span>سطح <span id="tap-lvl">1</span> • +1 برای هر ضربه</span>
+                        </div>
+                        <div class="boost-price">
+                            <img src="assets/coin.png" width="15">
+                            <span id="tap-cost">2000</span>
+                        </div>
+                    </div>
+                    <div class="boost-item" onclick="applyBoost('energy')">
+                        <div class="boost-icon">🔋</div>
+                        <div class="boost-details">
+                            <strong>ظرفیت انرژی</strong>
+                            <span>سطح <span id="energy-lvl">1</span> • +500 ظرفیت</span>
+                        </div>
+                        <div class="boost-price">
+                            <img src="assets/coin.png" width="15">
+                            <span id="energy-cost">5000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <nav class="bottom-menu">
+            <div class="nav-btn active" onclick="switchTab('game', event)">
+                <div class="nav-icon">⚽</div>
+                <span>بازی</span>
+            </div>
+            <div class="nav-btn" onclick="switchTab('shop', event)">
+                <div class="nav-icon">🏟️</div>
+                <span>تیم‌ها</span>
+            </div>
+            <div class="nav-btn" onclick="switchTab('boost', event)">
+                <div class="nav-icon">🚀</div>
+                <span>ارتقا</span>
+            </div>
+            <div class="nav-btn">
+                <div class="nav-icon">👥</div>
+                <span>دوستان</span>
+            </div>
         </nav>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
