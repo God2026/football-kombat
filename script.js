@@ -207,5 +207,28 @@ function formatNumber(num) {
     if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
     return Math.floor(num);
 }
+function createTeamCard(team) {
+    return `
+        <div class="team-card">
+            <img src="${team.image}" class="team-logo">
+            <span class="team-name">${team.name}</span>
+            <span class="profit-text">سود در ساعت</span>
+            <div class="profit-value">
+                <img src="assets/coin.png">
+                <span>+${team.profit}</span>
+            </div>
+            
+            <div class="card-footer">
+                <span class="lvl-text">lvl ${team.level || 1}</span>
+                <div class="price-box">
+                    <img src="assets/coin.png" width="12">
+                    <span>${team.price}</span>
+                </div>
+            </div>
+            <button class="buy-btn" onclick="buyTeam('${team.id}')"></button>
+        </div>
+    `;
+}
 
 initGame();
+
