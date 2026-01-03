@@ -13,120 +13,99 @@
     <div class="app-container" id="main-view">
         
         <div class="top-header">
-            <div class="user-info glass-panel">
-                <div class="avatar-box">
-                    <img src="assets/1.png" id="avatar-img" alt="User">
-                </div>
+            <div class="user-info">
+                <img src="assets/1.png" id="avatar-img" alt="User">
                 <div class="user-details">
                     <span id="username">بازیکن</span>
-                    <span class="league-badge" id="league-name">تازه کار</span>
+                    <span id="league-name" class="badge">تازه کار</span>
                 </div>
             </div>
         </div>
 
         <div class="stats-row">
-            <div class="stat-box glass-panel">
-                <span class="label">سود در ساعت</span>
-                <div class="value warning-color">
-                    <img src="https://img.icons8.com/emoji/48/coin-emoji.png" class="tiny-coin">
-                    <span id="profit-per-hour">0</span>
+            <div class="stat-box">
+                <span class="label">سود ساعتی</span>
+                <div class="value gold">
+                    <span>+</span><span id="profit-per-hour">0</span>
                 </div>
             </div>
-            <div class="stat-box glass-panel">
-                <span class="label">سکه تا لول بعد</span>
-                <div class="value highlight-color" id="coins-to-levelup">5K</div>
+            <div class="stat-box">
+                <span class="label">سکه</span>
+                <div class="value big-coin" id="total-coins">0</div>
             </div>
-            <div class="stat-box glass-panel">
-                <span class="label">قدرت ضربه</span>
-                <div class="value">
-                    <img src="https://img.icons8.com/emoji/48/coin-emoji.png" class="tiny-coin">
-                    +<span id="earn-per-tap">1</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="main-balance">
-            <img src="https://img.icons8.com/emoji/96/coin-emoji.png" class="main-coin-icon">
-            <span id="total-coins">0</span>
         </div>
 
         <div class="tap-area" onclick="handleTap(event)">
-            <div class="circle-bg"></div>
             <img id="main-character" src="assets/1.png" alt="Character">
         </div>
 
-        <div class="bottom-stats glass-panel">
-            <div class="progress-info">
-                 <span>لول آپ</span>
-                 <div class="progress-container">
-                    <div class="progress-bar" id="level-progress-bar" style="width: 1%;"></div>
-                </div>
-            </div>
-            <div class="energy-box">
-                <span class="lightning">⚡</span>
+        <div class="bottom-stats">
+            <div class="energy-info">
+                <span>⚡ انرژی:</span>
                 <span id="current-energy">1000</span> / <span id="max-energy">1000</span>
             </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="level-progress-bar" style="width: 1%;"></div>
+            </div>
         </div>
+        
+        <div style="height: 80px;"></div> </div>
 
+    <div id="shop-view" class="full-screen-view hidden">
+        <h2 class="view-title">خرید تیم 🏟️</h2>
+        <div class="category-tabs">
+            <button class="cat-btn active" onclick="filterShop('eng')">انگلیس</button>
+            <button class="cat-btn" onclick="filterShop('spa')">اسپانیا</button>
+            <button class="cat-btn" onclick="filterShop('irn')">ایران</button>
+            <button class="cat-btn" onclick="filterShop('asia')">آسیا</button>
+            <button class="cat-btn" onclick="filterShop('fifa')">ملی</button>
+        </div>
+        <div id="team-cards-container" class="cards-grid"></div>
         <div style="height: 100px;"></div>
     </div>
 
-    <div id="shop-view" class="full-screen-view hidden">
-        <h2 class="page-title">مارکت تیم‌ها 🏟️</h2>
-        <div class="category-tabs">
-            <button class="cat-btn active" onclick="filterShop('eng')">🇬🇧 انگلیس</button>
-            <button class="cat-btn" onclick="filterShop('spa')">🇪🇸 اسپانیا</button>
-            <button class="cat-btn" onclick="filterShop('irn')">🇮🇷 ایران</button>
-            <button class="cat-btn" onclick="filterShop('asia')">🌏 آسیا</button>
-            <button class="cat-btn" onclick="filterShop('fifa')">🏆 جهانی</button>
-        </div>
-        <div id="team-cards-container" class="cards-grid"></div>
-        <div style="height: 120px;"></div>
-    </div>
-
     <div id="upgrade-view" class="full-screen-view hidden">
-        <h2 class="page-title">تجهیزات باشگاه 💪</h2>
+        <h2 class="view-title">ارتقا قدرت 💪</h2>
         <div class="cards-grid">
-            <div class="team-card glass-panel">
-                <div class="card-icon">👆</div>
-                <h3>مولتی تپ</h3>
-                <p class="desc">افزایش قدرت هر ضربه</p>
-                <button class="buy-btn" onclick="upgradeBoost('multitap')">ارتقا (2000 💰)</button>
+            <div class="card-item">
+                <div class="icon-box">👆</div>
+                <div class="card-info">
+                    <h3>قدرت ضربه</h3>
+                    <p>سکه بیشتر با هر ضربه</p>
+                </div>
+                <button class="action-btn" onclick="upgradeBoost('multitap')">ارتقا (2000)</button>
             </div>
-            <div class="team-card glass-panel">
-                <div class="card-icon">🔋</div>
-                <h3>انرژی مکس</h3>
-                <p class="desc">افزایش ظرفیت انرژی</p>
-                <button class="buy-btn" onclick="upgradeBoost('energy')">ارتقا (2000 💰)</button>
+            <div class="card-item">
+                <div class="icon-box">🔋</div>
+                <div class="card-info">
+                    <h3>انرژی مکس</h3>
+                    <p>ظرفیت انرژی بیشتر</p>
+                </div>
+                <button class="action-btn" onclick="upgradeBoost('energy')">ارتقا (2000)</button>
             </div>
         </div>
     </div>
 
     <div id="friends-view" class="full-screen-view hidden">
-        <h2 class="page-title">رفقای فوتبالی 👬</h2>
-        <div class="friend-box glass-panel">
-            <div class="invite-icon">📨</div>
-            <p>لینک دعوتت رو بفرست و برای هر نفر 10,000 سکه بگیر!</p>
-            <button class="buy-btn primary-btn">کپی لینک دعوت</button>
+        <h2 class="view-title">دعوت دوستان 👥</h2>
+        <div class="invite-box">
+            <p>لینک زیر رو برای رفقات بفرست و سکه بگیر!</p>
+            <button class="action-btn full-width">کپی لینک دعوت</button>
         </div>
     </div>
 
-    <div class="bottom-nav glass-panel">
+    <div class="bottom-nav">
         <div class="nav-item active" onclick="openTab('game')">
-            <div class="icon">⚽</div>
-            <span>بازی</span>
+            <span>🏠 بازی</span>
         </div>
         <div class="nav-item" onclick="openTab('shop')">
-            <div class="icon">🛒</div>
-            <span>خرید</span>
+            <span>🛒 تیم‌ها</span>
         </div>
         <div class="nav-item" onclick="openTab('upgrade')">
-            <div class="icon">🚀</div>
-            <span>ارتقا</span>
+            <span>🚀 ارتقا</span>
         </div>
         <div class="nav-item" onclick="openTab('friends')">
-            <div class="icon">👥</div>
-            <span>دوستان</span>
+            <span>👥 دوستان</span>
         </div>
     </div>
 
