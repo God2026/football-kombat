@@ -1,90 +1,118 @@
-/* ریست و تنظیمات اولیه */
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
-body { background-color: #000; color: #fff; overflow: hidden; height: 100vh; }
-
-.app-container {
-    background: linear-gradient(180deg, #1a1f2e 0%, #000000 100%);
-    height: 100%; padding: 20px; display: flex; flex-direction: column; overflow-y: auto;
+/* style.css */
+/* تنظیمات کلی */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #111;
+  color: #eee;
+}
+header {
+  background: linear-gradient(135deg, #3f3f3f, #1c1c1c);
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+}
+header h1 {
+  margin: 0 0 10px;
+  color: #FBC02D;
+}
+.user-info span {
+  color: #fff;
+  font-weight: bold;
+}
+main {
+  padding: 20px;
 }
 
-.hidden { display: none !important; }
-
-/* هدر */
-.top-header { display: flex; align-items: center; margin-bottom: 20px; }
-.user-info { display: flex; align-items: center; background: #252a3a; padding: 8px; border-radius: 16px; width: 100%; border: 1px solid #333; }
-.user-info img { width: 40px; height: 40px; border-radius: 12px; margin-left: 10px; }
-.user-details { display: flex; flex-direction: column; flex-grow: 1; }
-#username { font-weight: bold; font-size: 14px; }
-.badge { font-size: 11px; color: #aaa; background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 6px; width: fit-content; margin-top: 2px; }
-
-/* آمارها */
-.stats-row { display: flex; gap: 10px; margin-bottom: 20px; }
-.stat-box { background: #252a3a; flex: 1; padding: 12px; border-radius: 16px; text-align: center; border: 1px solid #333; }
-.stat-box .label { font-size: 12px; color: #888; display: block; margin-bottom: 5px; }
-.stat-box .value { font-size: 18px; font-weight: 900; }
-.gold { color: #f3ba2f; }
-.big-coin { font-size: 24px; color: #fff; }
-
-/* بخش تپ کردن */
-.tap-area { flex-grow: 1; display: flex; justify-content: center; align-items: center; cursor: pointer; position: relative; }
-#main-character { width: 280px; transition: transform 0.1s; filter: drop-shadow(0 0 20px rgba(0,0,0,0.5)); }
-#main-character:active { transform: scale(0.95); }
-
-/* پایین صفحه بازی */
-.bottom-stats { background: #151515; padding: 15px; border-radius: 16px; margin-top: auto; border: 1px solid #333; }
-.energy-info { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; font-weight: bold; color: #ddd; }
-.progress-container { background: #333; height: 10px; border-radius: 5px; overflow: hidden; }
-.progress-bar { background: linear-gradient(90deg, #007aff, #00c6ff); height: 100%; width: 0%; transition: width 0.3s; }
-
-/* صفحات تمام صفحه (فروشگاه و ...) */
-.full-screen-view {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: #0f0f0f; padding: 20px; overflow-y: auto; z-index: 50;
-    padding-bottom: 80px;
+/* بخش فروشگاه ارتقا */
+.shop h2, .prices h2, .teams h2 {
+  color: #FBC02D;
+  margin-bottom: 10px;
 }
-.view-title { text-align: center; margin-bottom: 20px; color: #fff; font-size: 22px; }
-
-/* استایل جدید تب‌ها */
-.category-tabs { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 5px; scrollbar-width: none; }
-.cat-btn { 
-    background: #252a3a; color: #aaa; border: 1px solid #333; padding: 10px 16px; 
-    border-radius: 12px; font-size: 13px; font-weight: bold; cursor: pointer; white-space: nowrap; transition: 0.2s;
+.upgrades {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
-.cat-btn.active { background: #fff; color: #000; border-color: #fff; transform: scale(1.05); }
-
-/* کارت‌ها */
-.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.card-item, .team-card {
-    background: #1e222b; border: 1px solid #333; border-radius: 16px; padding: 15px;
-    display: flex; flex-direction: column; align-items: center; text-align: center;
-    transition: transform 0.1s;
+.card {
+  background: #1f1f1f;
+  padding: 15px;
+  border-radius: 8px;
+  width: 200px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  text-align: center;
 }
-.card-item:active { transform: scale(0.98); }
-.team-logo { width: 60px; height: 60px; object-fit: contain; margin-bottom: 10px; }
-.card-info h3 { font-size: 14px; margin-bottom: 4px; }
-.card-info p { font-size: 11px; color: #888; margin-bottom: 10px; }
-
-/* دکمه‌های اکشن (خرید/ارتقا) - دیگه پروتوتایپی نیست! */
-.action-btn, .buy-btn {
-    background: #007aff; color: white; border: none; padding: 10px; width: 100%;
-    border-radius: 10px; font-weight: bold; font-size: 13px; margin-top: auto; cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
+.card h3 {
+  margin-top: 0;
+  color: #FBC02D;
 }
-.buy-btn:disabled { background: #333; color: #777; box-shadow: none; }
-
-/* نویگیشن پایین */
-.bottom-nav {
-    position: fixed; bottom: 0; left: 0; width: 100%; background: #1a1a1a;
-    display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #333;
-    z-index: 100;
+.card p {
+  margin: 10px 0;
 }
-.nav-item { color: #666; font-size: 12px; text-align: center; cursor: pointer; transition: 0.2s; }
-.nav-item.active { color: #007aff; font-weight: bold; transform: translateY(-2px); }
-.nav-item span { display: block; margin-top: 4px; }
-
-/* متن پرنده موقع کلیک */
-.floating-text {
-    position: absolute; color: white; font-weight: bold; font-size: 24px;
-    pointer-events: none; animation: floatUp 0.8s ease-out forwards;
+.btn {
+  background: linear-gradient(90deg, #FBC02D, #FFD54F);
+  border: none;
+  padding: 10px 15px;
+  color: #111;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  transition: transform 0.1s, box-shadow 0.1s;
 }
-@keyframes floatUp { to { transform: translateY(-80px); opacity: 0; } }
+.btn:hover {
+  transform: scale(1.05);
+}
+.btn:active {
+  transform: scale(0.95);
+}
+
+/* جدول قیمت‌ها */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th {
+  background-color: #333;
+  color: #FBC02D;
+  padding: 8px;
+  text-align: left;
+}
+td {
+  background-color: #222;
+  border-top: 1px solid #444;
+  padding: 8px;
+}
+
+/* بخش تیم‌ها */
+.teams .team-logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.team {
+  text-align: center;
+}
+.team img {
+  width: 80px;
+  height: 80px;
+  background: #2a2a2a;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.team span {
+  display: block;
+  margin-top: 5px;
+}
+
+/* واکنش‌گرایی */
+@media (max-width: 600px) {
+  .upgrades, .team-logos {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card, table, .teams .team-logos {
+    width: 100%;
+  }
+}
