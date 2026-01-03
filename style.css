@@ -1,72 +1,89 @@
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tahoma', sans-serif; user-select: none; }/* کارت‌های تیم‌ها با افکت شیشه‌ای و حاشیه نئون */
-.team-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+/* ظرفیت نمایش کارت‌ها به صورت دو ستونه */
+#teams-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* دو ستون مساوی */
+    gap: 12px;
     padding: 15px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
-.team-card:hover {
-    transform: translateY(-5px);
-    border-color: #007bff;
-    box-shadow: 0 0 15px rgba(0, 123, 255, 0.4);
-}
-
-/* دکمه‌های خرید با استایل سه بعدی و انیمیشن کلیک */
-.buy-btn {
-    width: 100%;
-    background: linear-gradient(45deg, #007bff, #00c6ff);
-    border: none;
-    border-radius: 12px;
-    color: white;
+/* استایل کارت تیم‌ها دقیقا شبیه همستر */
+.team-card {
+    background-color: #272a2f; /* رنگ تیره کارت‌های همستر */
+    border-radius: 20px;
     padding: 12px;
-    font-weight: bold;
-    font-family: 'Vazir', sans-serif;
-    cursor: pointer;
-    box-shadow: 0 4px 0 #0056b3;
-    transition: all 0.1s active;
-    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* تراز از سمت راست/چپ */
+    position: relative;
+    border-bottom: 4px solid #1a1c20;
 }
 
-.buy-btn:active {
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 #0056b3;
+/* تصویر کوچک تیم در سمت بالا */
+.team-logo {
+    width: 45px;
+    height: 45px;
+    margin-bottom: 8px;
 }
 
-.buy-btn:disabled {
-    background: #444;
-    box-shadow: 0 4px 0 #222;
-    cursor: not-allowed;
-}
-
-/* تب‌های بالا (انگستان، لالیگا و...) */
-.cat-btn {
-    background: #1a1a1a;
-    border: 1px solid #333;
-    color: #888;
-    padding: 8px 15px;
-    border-radius: 30px;
-    font-size: 12px;
-    transition: all 0.3s;
-}
-
-.cat-btn.active {
-    background: #007bff;
+/* نام تیم */
+.team-name {
     color: white;
-    border-color: #00c6ff;
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-/* آیکون سکه کنار قیمت */
-.price-tag {
+/* سود در ساعت (Profit per hour) */
+.profit-text {
+    color: #848b94;
+    font-size: 10px;
+    margin-bottom: 4px;
+}
+
+.profit-value {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 5px;
-    color: #ffd700;
+    gap: 4px;
+    color: white;
+    font-size: 11px;
     font-weight: bold;
+}
+
+.profit-value img {
+    width: 12px; /* آیکون کوچک سکه */
+}
+
+/* خط جداکننده و بخش لول و قیمت */
+.card-footer {
+    width: 100%;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #3d434d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lvl-text {
+    color: #848b94;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.price-box {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: white;
+    font-size: 11px;
+    border-left: 1px solid #3d434d;
+    padding-right: 10px;
+}
+
+/* دکمه خرید که کل کارت رو پوشش میده */
+.buy-btn {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0;
+    cursor: pointer;
 }
