@@ -1,114 +1,85 @@
+<!-- index.html -->
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Football Legend</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>بازی فوتبالی (Hamster-Styled UI)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="app-container" id="main-view">
-        
-        <div class="top-header">
-            <div class="user-info">
-                <img src="assets/1.png" id="avatar-img" alt="User">
-                <div class="user-details">
-                    <span id="username">بازیکن</span>
-                    <span id="league-name" class="badge">تازه کار</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="stats-row">
-            <div class="stat-box">
-                <span class="label">سود ساعتی</span>
-                <div class="value gold">
-                    <span>+</span><span id="profit-per-hour">0</span>
-                </div>
-            </div>
-            <div class="stat-box">
-                <span class="label">سکه</span>
-                <div class="value big-coin" id="total-coins">0</div>
-            </div>
-        </div>
-
-        <div class="tap-area" onclick="handleTap(event)">
-            <img id="main-character" src="assets/1.png" alt="Character">
-        </div>
-
-        <div class="bottom-stats">
-            <div class="energy-info">
-                <span>⚡ انرژی:</span>
-                <span id="current-energy">1000</span> / <span id="max-energy">1000</span>
-            </div>
-            <div class="progress-container">
-                <div class="progress-bar" id="level-progress-bar" style="width: 1%;"></div>
-            </div>
-        </div>
-        
-        <div style="height: 80px;"></div> </div>
-
-    <div id="shop-view" class="full-screen-view hidden">
-        <h2 class="view-title">خرید تیم 🏟️</h2>
-        <div class="category-tabs">
-            <button class="cat-btn active" onclick="filterShop('eng')">انگلیس</button>
-            <button class="cat-btn" onclick="filterShop('spa')">اسپانیا</button>
-            <button class="cat-btn" onclick="filterShop('irn')">ایران</button>
-            <button class="cat-btn" onclick="filterShop('asia')">آسیا</button>
-            <button class="cat-btn" onclick="filterShop('fifa')">ملی</button>
-        </div>
-        <div id="team-cards-container" class="cards-grid"></div>
-        <div style="height: 100px;"></div>
+  <header>
+    <h1>بازی فوتبالی من</h1>
+    <div class="user-info">
+      نام کاربری: <span>Player1</span> | سطح: <span>2</span> | سکه‌ها: <span>12345</span>
     </div>
+  </header>
+  <main>
+    <!-- بخش ارتقاها -->
+    <section class="shop">
+      <h2>فروشگاه ارتقا</h2>
+      <div class="upgrades">
+        <div class="card">
+          <h3>بازاریاب خبره</h3>
+          <p>سطح ۱: <strong>۱۰۰۰ سکه</strong></p>
+          <button class="btn upgrade-btn">ارتقا به سطح ۱</button>
+        </div>
+        <div class="card">
+          <h3>مدیر روابط عمومی</h3>
+          <p>سطح ۱: <strong>۲۰۰۰ سکه</strong></p>
+          <button class="btn upgrade-btn">ارتقا به سطح ۱</button>
+        </div>
+        <!-- آیتم‌ها و کارت‌های بیشتری می‌توان اضافه کرد -->
+      </div>
+    </section>
 
-    <div id="upgrade-view" class="full-screen-view hidden">
-        <h2 class="view-title">ارتقا قدرت 💪</h2>
-        <div class="cards-grid">
-            <div class="card-item">
-                <div class="icon-box">👆</div>
-                <div class="card-info">
-                    <h3>قدرت ضربه</h3>
-                    <p>سکه بیشتر با هر ضربه</p>
-                </div>
-                <button class="action-btn" onclick="upgradeBoost('multitap')">ارتقا (2000)</button>
-            </div>
-            <div class="card-item">
-                <div class="icon-box">🔋</div>
-                <div class="card-info">
-                    <h3>انرژی مکس</h3>
-                    <p>ظرفیت انرژی بیشتر</p>
-                </div>
-                <button class="action-btn" onclick="upgradeBoost('energy')">ارتقا (2000)</button>
-            </div>
-        </div>
-    </div>
+    <!-- بخش جدول قیمت‌ها (نمونه) -->
+    <section class="prices">
+      <h2>جدول قیمت ارتقاها</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>آیتم</th>
+            <th>سطح ۱</th>
+            <th>سطح ۲</th>
+            <th>سطح ۳</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>بازاریاب خبره</td>
+            <td>۱۰۰۰</td>
+            <td>۲۵۰۰</td>
+            <td>۵۰۰۰</td>
+          </tr>
+          <tr>
+            <td>مدیر روابط عمومی</td>
+            <td>۲۰۰۰</td>
+            <td>۵۰۰۰</td>
+            <td>۱۰۰۰۰</td>
+          </tr>
+          <!-- سطرهای بیشتر -->
+        </tbody>
+      </table>
+    </section>
 
-    <div id="friends-view" class="full-screen-view hidden">
-        <h2 class="view-title">دعوت دوستان 👥</h2>
-        <div class="invite-box">
-            <p>لینک زیر رو برای رفقات بفرست و سکه بگیر!</p>
-            <button class="action-btn full-width">کپی لینک دعوت</button>
+    <!-- تصاویر تیم‌ها (نمونه) -->
+    <section class="teams">
+      <h2>تیم‌ها</h2>
+      <div class="team-logos">
+        <div class="team">
+          <img src="logo1.png" alt="تیم اول">
+          <span>نام تیم اول</span>
         </div>
-    </div>
+        <div class="team">
+          <img src="logo2.png" alt="تیم دوم">
+          <span>نام تیم دوم</span>
+        </div>
+        <!-- لوگوهای بیشتری -->
+      </div>
+    </section>
+  </main>
 
-    <div class="bottom-nav">
-        <div class="nav-item active" onclick="openTab('game')">
-            <span>🏠 بازی</span>
-        </div>
-        <div class="nav-item" onclick="openTab('shop')">
-            <span>🛒 تیم‌ها</span>
-        </div>
-        <div class="nav-item" onclick="openTab('upgrade')">
-            <span>🚀 ارتقا</span>
-        </div>
-        <div class="nav-item" onclick="openTab('friends')">
-            <span>👥 دوستان</span>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
